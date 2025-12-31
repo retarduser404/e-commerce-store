@@ -1,0 +1,21 @@
+{
+  "name": "ecommerce-store",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "parcel public/index.html",
+    "build": "parcel build public/index.html",
+    "start": "parcel public/index.html"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "parcel": "^2.8.3"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions"
+  ]
+}

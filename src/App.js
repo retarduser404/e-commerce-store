@@ -1,0 +1,209 @@
+import React, { useState, useEffect } from 'react';
+import Header from './components/Header';
+import ProductList from './components/ProductList';
+import Cart from './components/cart';
+import { fetchProducts } from './utils/promises';
+import { productGenerator } from './utils/generators';
+import { ToastProvider } from './context/ToastContext';
+import Toast from './components/Toast';
+import './styles/App.css';
+
+const APP_TITLE = "TechBazaar India";
+const CATEGORIES = ['All', 'Storage', 'Memory', 'Peripherals', 'Components', 'Books'];
+
+function App() {
+    const [products, setProducts] = useState([]);
+    const [filteredProducts, setFilteredProducts] = useState([]);
+    const [cart, setCart] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('All');
+    const [loading, setLoading] = useState(true);
+    const [isCartOpen, setIsCartOpen] = useState(false);
+
+    useEffect(() => {
+        const loadProducts = async () => {
+            try {
+                const fetchedProducts = await fetchProducts();
+                const generator = productGenerator(fetchedProducts);
+                const enhancedProducts = [];
+                
+                for (let product of generator) {
+                    enhancedProducts.push(product);
+                }
+                
+                setProducts(enhancedProducts);
+                setFilteredProducts(enhancedProducts);
+            } catch (error) {
+                console.log('Using fallback products');
+                const fallbackProducts = [
+                    { 
+                        id: 1, 
+                        name: 'Samsung 980 Pro 1TB NVMe SSD', 
+                        price: 8999, 
+                        category: 'Storage', 
+                        description: 'PCIe 4.0 NVMe M.2 SSD with read speeds up to 7000MB/s.',
+                        image: 'images/SSD.jpg',
+                        rating: 4.5,
+                        inStock: true
+                    },
+                    { 
+                        id: 2, 
+                        name: 'Corsair Vengeance 16GB DDR4 RAM', 
+                        price: 5499, 
+                        category: 'Memory', 
+                        description: '16GB DDR4 3200MHz CL16 Desktop Memory.',
+                        image: 'https://m.media-amazon.com/images/I/61kRr3gBmXL._AC_SL1500_.jpg',
+                        rating: 4.3,
+                        inStock: true
+                    },
+                    { 
+                        id: 3, 
+                        name: 'Cosmic Byte CB-GK-18 Firefly Keyboard', 
+                        price: 3299, 
+                        category: 'Peripherals', 
+                        description: 'RGB Mechanical Gaming Keyboard with Blue Switches.',
+                        image: 'https://m.media-amazon.com/images/I/71Wj-2+-ZLL._AC_SL1500_.jpg',
+                        rating: 4.2,
+                        inStock: true
+                    },
+                    { 
+                        id: 4, 
+                        name: 'Logitech G102 Lightsync Gaming Mouse', 
+                        price: 1899, 
+                        category: 'Peripherals', 
+                        description: 'RGB Gaming Mouse with 8000 DPI sensor.',
+                        image: 'https://m.media-amazon.com/images/I/61D8Bq7Bv9L._AC_SL1500_.jpg',
+                        rating: 4.4,
+                        inStock: true
+                    },
+                    { 
+                        id: 5, 
+                        name: 'ZOTAC Gaming GeForce RTX 3060 Twin Edge', 
+                        price: 32999, 
+                        category: 'Components', 
+                        description: '12GB GDDR6 Graphics Card with Ray Tracing.',
+                        image: 'https://m.media-amazon.com/images/I/81P3S+-bN3L._AC_SL1500_.jpg',
+                        rating: 4.6,
+                        inStock: true
+                    },
+                    { 
+                        id: 6, 
+                        name: 'Introduction to Algorithms (Eastern Economy Edition)', 
+                        price: 899, 
+                        category: 'Books', 
+                        description: 'Classic algorithms book by Thomas H. Cormen.',
+                        image: 'https://m.media-amazon.com/images/I/41VndKV5BXL._SX442_BO1,204,203,200_.jpg',
+                        rating: 4.7,
+                        inStock: true
+                    }
+                ];
+                setProducts(fallbackProducts);
+                setFilteredProducts(fallbackProducts);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        loadProducts();
+    }, []);
+
+    useEffect(() => {
+        const filtered = products.filter(product => {
+            const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase());
+            const matchesCategory = selectedCategory === 'All' || product.category === selectedCategory;
+            return matchesSearch && matchesCategory;
+        });
+        setFilteredProducts(filtered);
+    }, [searchTerm, selectedCategory, products]);
+
+    const addToCart = (product) => {
+        const existingItem = cart.find(item => item.id === product.id);
+        
+        if (existingItem) {
+            setCart(cart.map(item =>
+                item.id === product.id
+                    ? { ...item, quantity: item.quantity + 1 }
+                    : item
+            ));
+        } else {
+            setCart([...cart, { ...product, quantity: 1 }]);
+        }
+        
+        localStorage.setItem('cart', JSON.stringify([...cart, { ...product, quantity: 1 }]));
+    };
+
+    const removeFromCart = (productId) => {
+        const updatedCart = cart.filter(item => item.id !== productId);
+        setCart(updatedCart);
+        localStorage.setItem('cart', JSON.stringify(updatedCart));
+    };
+
+    const updateQuantity = (productId, newQuantity) => {
+        if (newQuantity <= 0) {
+            removeFromCart(productId);
+            return;
+        }
+        
+        const updatedCart = cart.map(item =>
+            item.id === productId
+                ? { ...item, quantity: newQuantity }
+                : item
+        );
+        setCart(updatedCart);
+        localStorage.setItem('cart', JSON.stringify(updatedCart));
+    };
+
+    useEffect(() => {
+        const savedCart = localStorage.getItem('cart');
+        if (savedCart) {
+            try {
+                setCart(JSON.parse(savedCart));
+            } catch (error) {
+                console.error('Error loading cart from localStorage:', error);
+            }
+        }
+    }, []);
+
+    const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+    const totalPrice = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+
+    return (
+        <ToastProvider>
+            <div className="app">
+                <Header 
+                    title={APP_TITLE}
+                    cartCount={totalItems}
+                    onSearch={setSearchTerm}
+                    categories={CATEGORIES}
+                    selectedCategory={selectedCategory}
+                    onCategoryChange={setSelectedCategory}
+                    onCartToggle={() => setIsCartOpen(!isCartOpen)}
+                />
+                
+                <main className="main-content">
+                    {loading ? (
+                        <div className="loading">Loading products...</div>
+                    ) : (
+                        <>
+                            <ProductList 
+                                products={filteredProducts}
+                                onAddToCart={addToCart}
+                            />
+                            <Cart 
+                                cartItems={cart}
+                                onRemoveItem={removeFromCart}
+                                onUpdateQuantity={updateQuantity}
+                                totalPrice={totalPrice}
+                                isOpen={isCartOpen}
+                                onClose={() => setIsCartOpen(false)}
+                            />
+                        </>
+                    )}
+                </main>
+                <Toast />
+            </div>
+        </ToastProvider>
+    );
+}
+
+export default App;
