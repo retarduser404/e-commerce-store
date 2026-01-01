@@ -18,7 +18,7 @@ const fetchProducts = () => {
                     price: 5499,
                     category: 'Memory',
                     description: '16GB DDR4 3200MHz CL16 Desktop Memory. High performance RAM for gaming and content creation.',
-                    image: '/images/RAM.webp',
+                    image: '/images/RAM.jpg',
                     rating: 4.3,
                     inStock: true
                 },
@@ -28,7 +28,7 @@ const fetchProducts = () => {
                     price: 3299,
                     category: 'Peripherals',
                     description: 'RGB Mechanical Gaming Keyboard with Blue Switches. Full RGB backlighting with multiple effects.',
-                    image: '/images/keyboard.webp',
+                    image: '/images/keyboard.jpg',
                     rating: 4.2,
                     inStock: true
                 },
@@ -38,7 +38,7 @@ const fetchProducts = () => {
                     price: 1899,
                     category: 'Peripherals',
                     description: 'RGB Gaming Mouse with 8000 DPI sensor. 6 programmable buttons for gaming.',
-                    image: '/images/mouse.webp',
+                    image: '/images/mouse.jpg',
                     rating: 4.4,
                     inStock: true
                 },
@@ -48,17 +48,17 @@ const fetchProducts = () => {
                     price: 32999,
                     category: 'Components',
                     description: '12GB GDDR6 Graphics Card with Ray Tracing. Supports DLSS for better gaming performance.',
-                    image: '/images/Graphics.webp',
+                    image: '/images/Graphics.jpg',
                     rating: 4.6,
                     inStock: true
                 },
                 {
-                    id: 6,   
+                    id: 6,
                     name: 'Introduction to Algorithms (Eastern Economy Edition)',
                     price: 899,
                     category: 'Books',
                     description: 'The Eastern Economy Edition of the classic algorithms book by Thomas H. Cormen. Comprehensive coverage of algorithms and data structures.',
-                    image: '/images/book.webp',
+                    image: '"C:\Users\karti\.vscode\ecommerce-store\public\images\book.jpg"',
                     rating: 4.7,
                     inStock: true
                 }

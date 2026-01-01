@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
-    "dev": "parcel public/index.html",
-    "build": "parcel build public/index.html",
-    "start": "parcel public/index.html"
+    "dev": "parcel index.html --public-url /",
+    "start": "parcel index.html --public-url /",
+    "build": "parcel build index.html --public-url /"
   },
   "dependencies": {
     "react": "^18.2.0",
