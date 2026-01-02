@@ -44,7 +44,7 @@ A modern, responsive e-commerce platform built with React, designed for browsing
 
 3. **Start the development server**
    ```bash
-   npm run dev
+   npm start
    ```
 
 4. **Open your browser**
