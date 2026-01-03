@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { images } from '../assets/images';
 
 function ProductCard({ product, onAddToCart }) {
     const [isExpanded, setIsExpanded] = useState(false);
@@ -25,17 +26,18 @@ function ProductCard({ product, onAddToCart }) {
         setClickCount(prev => prev + 1);
     };
 
+
     return (
         <div className="product-card">
             <div className="product-image">
                 <img
-                    src={product.image}
+                    src={images[product.image]}
                     alt=""
                     loading="lazy"
                     onError={(e) => {
                         if (e.currentTarget.dataset.fallback) return;
                         e.currentTarget.dataset.fallback = 'true';
-                        e.currentTarget.src = '/images/fallback.png';
+                        e.currentTarget.src = images['fallback.png'];
                     }}
                 />
 
