@@ -44,7 +44,7 @@ function App() {
             price: 8999,
             category: 'Storage',
             description: 'PCIe 4.0 NVMe M.2 SSD with read speeds up to 7000MB/s.',
-            image: '/images/SSD.jpg',
+            image: 'SSD.jpg',
             rating: 4.5,
             inStock: true
           },
@@ -54,7 +54,7 @@ function App() {
             price: 5499,
             category: 'Memory',
             description: '16GB DDR4 3200MHz CL16 Desktop Memory.',
-            image: 'https://m.media-amazon.com/images/I/61kRr3gBmXL._AC_SL1500_.jpg',
+            image: 'RAM.jpg',
             rating: 4.3,
             inStock: true
           },
@@ -64,7 +64,7 @@ function App() {
             price: 3299,
             category: 'Peripherals',
             description: 'RGB Mechanical Gaming Keyboard with Blue Switches.',
-            image: 'https://m.media-amazon.com/images/I/71Wj-2+-ZLL._AC_SL1500_.jpg',
+            image: 'keyboard.jpg',
             rating: 4.2,
             inStock: true
           },
@@ -74,7 +74,7 @@ function App() {
             price: 1899,
             category: 'Peripherals',
             description: 'RGB Gaming Mouse with 8000 DPI sensor.',
-            image: '/images/mouse.jpg', // ✅ FIXED PATH
+            image: 'mouse.jpg', // ✅ FIXED PATH
             rating: 4.4,
             inStock: true
           },
@@ -84,7 +84,7 @@ function App() {
             price: 32999,
             category: 'Components',
             description: '12GB GDDR6 Graphics Card with Ray Tracing.',
-            image: 'https://m.media-amazon.com/images/I/81P3S+-bN3L._AC_SL1500_.jpg',
+            image: 'Graphics.jpg',
             rating: 4.6,
             inStock: true
           },
@@ -94,7 +94,7 @@ function App() {
             price: 899,
             category: 'Books',
             description: 'Classic algorithms book by Thomas H. Cormen.',
-            image: 'https://m.media-amazon.com/images/I/41VndKV5BXL._SX442_BO1,204,203,200_.jpg',
+            image: 'book.jpg',
             rating: 4.7,
             inStock: true
           }
